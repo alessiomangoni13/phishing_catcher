@@ -1,0 +1,6 @@
+phishingcatcher_bot_APIKEY: <YOUR API KEY HERE>
+phishingcatcher_bot_user_id: <YOUR USER ID HERE>
+phishingcatcher_blacklist_addr: <SERVER IP ADDRESS HERE>
+phishingcatcher_blacklist_port: <EXPOSED SERVER TCP PORT HERE>
+phishingcatcher_blacklist_file: <BLACKLIST FILENAME HERE>
+phishingcatcher_log_file: <LOGS FILENAME HERE>

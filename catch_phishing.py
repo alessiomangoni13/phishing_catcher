@@ -40,7 +40,7 @@ from tld import get_tld
 from confusables import unconfuse
 
 # @@
-bot = telepot.Bot('<YOURAPIHERE')
+bot = telepot.Bot('<YOURAPIHERE>')
 telegram_user = "<YOUR TELEGRAM ID HERE>"
 # @@
 
@@ -55,7 +55,7 @@ log_suspicious = 'suspicious_domains.log'
 pbar = tqdm.tqdm(desc='certificate_update', unit='cert')
 
 # @@
-IP = "<YOUR IP HERE"
+IP = "<YOUR IP HERE>"
 PORT = <PORT>
 Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
 httpd = SocketServer.TCPServer((IP, PORT), Handler)
@@ -162,7 +162,7 @@ def callback(message, context):
 # @@
             if score >= 100:
 # @@            if score >= 95:
-                bot.sendMessage(meng, domain)
+                bot.sendMessage(telegram_user, domain)
 # @@
 # @@                with open(log_suspicious, 'a') as f:
                 with open(pihole_blacklist, 'a') as f:

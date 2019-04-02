@@ -9,23 +9,57 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
+# ...
+# Slightly modified to be able do the following:
+# - exclude wildcards in domains
+# - create a blacklist file and expose it via http server (to feed a Pihole)
+# - notification of new potential phishing domains via Telegram bot
+
 import re
 
 import certstream
 import entropy
 import tqdm
 import yaml
+
+# @@ trying to receive phishing alerts on Telegram
+import telepot
+# @@
+# @@ blacklist webserver exposed
+# @@
+import ipaddress
+import SimpleHTTPServer
+import SocketServer
+import thread
+# @@
+
 from Levenshtein import distance
 from termcolor import colored, cprint
 from tld import get_tld
 
 from confusables import unconfuse
 
+# @@
+bot = telepot.Bot('<YOURAPIHERE')
+telegram_user = "<YOUR TELEGRAM ID HERE>"
+# @@
+
 certstream_url = 'wss://certstream.calidog.io'
+
+# @@
+pihole_blacklist = 'phishing.txt'
+# @@
 
 log_suspicious = 'suspicious_domains.log'
 
 pbar = tqdm.tqdm(desc='certificate_update', unit='cert')
+
+# @@
+IP = "<YOUR IP HERE"
+PORT = <PORT>
+Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+httpd = SocketServer.TCPServer((IP, PORT), Handler)
+# @@
 
 def score_domain(domain):
     """Score `domain`.
@@ -107,8 +141,9 @@ def callback(message, context):
             # If issued from a free CA = more suspicious
             if "Let's Encrypt" in message['data']['chain'][0]['subject']['aggregated']:
                 score += 10
-
-            if score >= 100:
+# @@
+# Don't need to print all this stuff
+            '''if score >= 100:
                 tqdm.tqdm.write(
                     "[!] Suspicious: "
                     "{} (score={})".format(colored(domain, 'red', attrs=['underline', 'bold']), score))
@@ -123,11 +158,28 @@ def callback(message, context):
             elif score >= 65:
                 tqdm.tqdm.write(
                     "[+] Potential : "
-                    "{} (score={})".format(colored(domain, attrs=['underline']), score))
+                    "{} (score={})".format(colored(domain, attrs=['underline']), score))'''
+# @@
+            if score >= 100:
+# @@            if score >= 95:
+                bot.sendMessage(meng, domain)
+# @@
+# @@                with open(log_suspicious, 'a') as f:
+                with open(pihole_blacklist, 'a') as f:
+# @@
+                    if domain.startswith("*."):
+                        print('wildcard!')
+                    else:
+                        f.write("{}\n".format(domain))
+# @@
 
-            if score >= 75:
-                with open(log_suspicious, 'a') as f:
-                    f.write("{}\n".format(domain))
+# @@                    else f.write("{}\n".format(domain))
+
+# @@
+def start_server():
+    print "blacklist served at: http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist
+    httpd.serve_forever()
+# @@
 
 
 if __name__ == '__main__':
@@ -145,5 +197,5 @@ if __name__ == '__main__':
 
         if external['tlds'] is not None:
             suspicious['tlds'].update(external['tlds'])
-
+    thread.start_new_thread(start_server, ())
     certstream.listen_for_events(callback, url=certstream_url)

@@ -4,3 +4,4 @@ phishingcatcher_blacklist_addr: <SERVER IP ADDRESS HERE>
 phishingcatcher_blacklist_port: <EXPOSED SERVER TCP PORT HERE>
 phishingcatcher_blacklist_file: <BLACKLIST FILENAME HERE>
 phishingcatcher_log_file: <LOGS FILENAME HERE>
+phishingcatcher_threshold: <ADJUST YOUR THRESHOLD HERE>

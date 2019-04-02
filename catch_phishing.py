@@ -39,24 +39,29 @@ from tld import get_tld
 
 from confusables import unconfuse
 
+# @@ Reading config file
+with open("config.yml", 'r') as ymlfile:
+    cfg = yaml.load(ymlfile)
+
+# @@
 # @@ Setting up the Telegram bot here (https://telepot.readthedocs.io/en/latest/#id5)
-bot = telepot.Bot('<YOURAPIHERE>')
-telegram_user = "<YOUR TELEGRAM ID HERE>"
+bot = telepot.Bot(cfg['phishingcatcher_bot_APIKEY'])
+telegram_user = cfg['phishingcatcher_bot_user_id']
 # @@
 
 certstream_url = 'wss://certstream.calidog.io'
 
 # @@ blacklist filename here
-pihole_blacklist = 'phishing.txt'
+pihole_blacklist = cfg['phishingcatcher_blacklist_file']
 # @@
 
-log_suspicious = 'suspicious_domains.log'
+log_suspicious = cfg['phishingcatcher_log_file']
 
 pbar = tqdm.tqdm(desc='certificate_update', unit='cert')
 
 # @@ webserver configuration (remember to use PORT>1024, you don't want Python to run as root don't you?)
-IP = "<YOUR IP HERE>"
-PORT = <PORT>
+IP = cfg['phishingcatcher_blacklist_addr']
+PORT = cfg['phishingcatcher_blacklist_port']
 Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
 httpd = SocketServer.TCPServer((IP, PORT), Handler)
 # @@
@@ -161,14 +166,14 @@ def callback(message, context):
                     "{} (score={})".format(colored(domain, attrs=['underline']), score))'''
 
 # @@ Triggering the bot and the blacklist only when the score is "too damn high" 
-            if score >= 100:
+            if score >= 50:
                 with open(pihole_blacklist, 'a') as f:
 # @@ Excluding wildcard registrations here
                     if domain.startswith("*."):
                         print("Wildcard found! I will not add: " + domain + "to the file " + pihole_blacklist)
+                        bot.sendMessage(telegram_user, domain + " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )
                     else:
                         f.write("{}\n".format(domain))
-                        bot.sendMessage(telegram_user, domain + " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )
 
 # @@ defined a function to expose the webserver
 def start_server():

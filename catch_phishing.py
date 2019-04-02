@@ -41,7 +41,7 @@ from confusables import unconfuse
 
 # @@ Reading config file
 with open("config.yml", 'r') as ymlfile:
-    cfg = yaml.load(ymlfile)
+    cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
 
 # @@
 # @@ Setting up the Telegram bot here (https://telepot.readthedocs.io/en/latest/#id5)

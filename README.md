@@ -19,9 +19,21 @@ pip install -r requirements.txt
 
 ### Usage
 
+first, edit the config.yml by providing the following information:
+- Telegram bot [TOKEN](https://telepot.readthedocs.io/en/latest/#id6) 
+- Telegram [id](https://telepot.readthedocs.io/en/latest/#id7) 
+- Server IP address (127.0.0.1 if you want to run it only locally)
+- TCP port where the blacklist will be server (any port > 1024 will do, unless you want to run the script as root, and you don't, don't you??)
+- Blacklist filename (any name will do, as long you keep the .txt extension)
+- Logs filename (again, any filename - and path - will do) 
+- Score beyond which phishing_catcher will save new phishing domains (tradeoff between too many false positives and skipping potentially interesting domains)
+
 ```
 $ ./catch_phishing.py
 ```
+
+### Example phishing notification
+![Bot notification](https://i.imgur.com/24FNAI8.png)
 
 ### Example phishing caught
 

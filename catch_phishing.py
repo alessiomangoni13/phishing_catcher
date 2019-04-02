@@ -162,13 +162,13 @@ def callback(message, context):
 
 # @@ Triggering the bot and the blacklist only when the score is "too damn high" 
             if score >= 100:
-                bot.sendMessage(telegram_user, domain)
                 with open(pihole_blacklist, 'a') as f:
 # @@ Excluding wildcard registrations here
                     if domain.startswith("*."):
-                        print('wildcard!')
+                        print("Wildcard found! I will not add: " + domain + "to the file " + pihole_blacklist)
                     else:
                         f.write("{}\n".format(domain))
+                        bot.sendMessage(telegram_user, domain + " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )
 
 # @@ defined a function to expose the webserver
 def start_server():

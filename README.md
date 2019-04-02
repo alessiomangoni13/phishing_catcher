@@ -1,6 +1,10 @@
-# Phishing catcher
+# Phishing catcher (on steroids?)
 
 Catching malicious phishing domain names using [certstream](https://certstream.calidog.io/) SSL certificates live stream.
+
+Blacklist creation to feed a [Pi-hole](https://github.com/pi-hole/pi-hole/blob/master/README.md)
+
+Notification of a new domain added via [Telegram bot](https://core.telegram.org/bots) 
 
 This is just a working PoC, feel free to contribute and tweak the code to fit your needs 👍
 

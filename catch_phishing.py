@@ -22,11 +22,11 @@ import entropy
 import tqdm
 import yaml
 
-# @@ trying to receive phishing alerts on Telegram
+# @@ I'm using telepot to send Telegram notifications
 import telepot
 # @@
-# @@ blacklist webserver exposed
-# @@
+
+# @@ I'm exposing a webserver to serve the blacklist to pi-hole
 import ipaddress
 import SimpleHTTPServer
 import SocketServer
@@ -39,14 +39,14 @@ from tld import get_tld
 
 from confusables import unconfuse
 
-# @@
+# @@ Setting up the Telegram bot here (https://telepot.readthedocs.io/en/latest/#id5)
 bot = telepot.Bot('<YOURAPIHERE>')
 telegram_user = "<YOUR TELEGRAM ID HERE>"
 # @@
 
 certstream_url = 'wss://certstream.calidog.io'
 
-# @@
+# @@ blacklist filename here
 pihole_blacklist = 'phishing.txt'
 # @@
 
@@ -54,7 +54,7 @@ log_suspicious = 'suspicious_domains.log'
 
 pbar = tqdm.tqdm(desc='certificate_update', unit='cert')
 
-# @@
+# @@ webserver configuration (remember to use PORT>1024, you don't want Python to run as root don't you?)
 IP = "<YOUR IP HERE>"
 PORT = <PORT>
 Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
@@ -159,23 +159,18 @@ def callback(message, context):
                 tqdm.tqdm.write(
                     "[+] Potential : "
                     "{} (score={})".format(colored(domain, attrs=['underline']), score))'''
-# @@
+
+# @@ Triggering the bot and the blacklist only when the score is "too damn high" 
             if score >= 100:
-# @@            if score >= 95:
                 bot.sendMessage(telegram_user, domain)
-# @@
-# @@                with open(log_suspicious, 'a') as f:
                 with open(pihole_blacklist, 'a') as f:
-# @@
+# @@ Excluding wildcard registrations here
                     if domain.startswith("*."):
                         print('wildcard!')
                     else:
                         f.write("{}\n".format(domain))
-# @@
 
-# @@                    else f.write("{}\n".format(domain))
-
-# @@
+# @@ defined a function to expose the webserver
 def start_server():
     print "blacklist served at: http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist
     httpd.serve_forever()
@@ -197,5 +192,9 @@ if __name__ == '__main__':
 
         if external['tlds'] is not None:
             suspicious['tlds'].update(external['tlds'])
+            
+ # @@ creating a new thread for the webserver           
     thread.start_new_thread(start_server, ())
+ # @@
+
     certstream.listen_for_events(callback, url=certstream_url)

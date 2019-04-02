@@ -170,9 +170,9 @@ def callback(message, context):
                 with open(pihole_blacklist, 'a') as f:
 # @@ Excluding wildcard registrations here
                     if domain.startswith("*."):
-                        print("\nWildcard found! I will not add: " + domain + "to the file " + pihole_blacklist)
-                        bot.sendMessage(telegram_user, domain + " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )
+                        print("\nWildcard found! I will not add: " + domain + " to the file " + pihole_blacklist)
                     else:
+                        bot.sendMessage(telegram_user, domain + " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )
                         f.write("{}\n".format(domain))
 
 # @@ defined a function to expose the webserver

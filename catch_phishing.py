@@ -166,7 +166,7 @@ def callback(message, context):
                     "{} (score={})".format(colored(domain, attrs=['underline']), score))'''
 
 # @@ Triggering the bot and the blacklist only when the score is "too damn high" 
-            if score >= 50:
+            if score >= cfg['phishingcatcher_threshold']:
                 with open(pihole_blacklist, 'a') as f:
 # @@ Excluding wildcard registrations here
                     if domain.startswith("*."):

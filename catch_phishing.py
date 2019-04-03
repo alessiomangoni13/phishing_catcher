@@ -33,6 +33,12 @@ import SocketServer
 import thread
 # @@
 
+# @@
+# @@ I want to be able to produce RFC 5424 compliant messages
+import logging
+# @@
+
+
 from Levenshtein import distance
 from termcolor import colored, cprint
 from tld import get_tld
@@ -55,7 +61,19 @@ certstream_url = 'wss://certstream.calidog.io'
 pihole_blacklist = cfg['phishingcatcher_blacklist_file']
 # @@
 
-pbar = tqdm.tqdm(desc='certificate_update', unit='cert')
+# @@ logfile here and logger intialized
+log_file = cfg['phishingcatcher_log_file']
+log_file = cfg['phishingcatcher_log_file']
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M',
+                    filename=log_file,
+                    filemode='w')
+# defining areas
+blacklisting = logging.getLogger('phishingcatcher.blacklisting')
+evaluating = logging.getLogger('phishingcatcher.evaluating')
+# @@
 
 # @@ webserver configuration (remember to use PORT>1024, you don't want Python to run as root don't you?)
 IP = cfg['phishingcatcher_blacklist_addr']
@@ -79,6 +97,7 @@ def score_domain(domain):
     for t in suspicious['tlds']:
         if domain.endswith(t):
             score += 20
+            evaluating.debug('%s suspicious_tld added score:%s', domain, score,)
 
     # Remove initial '*.' for wildcard certificates bug
     if domain.startswith('*.'):
@@ -93,6 +112,7 @@ def score_domain(domain):
 
     # Higer entropy is kind of suspicious
     score += int(round(entropy.shannon_entropy(domain)*50))
+    evaluating.debug('%s high_entropy added score:%s', domain, score,)
 
     # Remove lookalike characters using list from http://www.unicode.org/reports/tr39
     domain = unconfuse(domain)
@@ -105,11 +125,13 @@ def score_domain(domain):
         # ie. detect fake .com (ie. *.com-account-management.info)
         if words_in_domain[0] in ['com', 'net', 'org']:
             score += 10
+            evaluating.debug('%s fake_tld added score:%s', domain, score,)
 
     # Testing keywords
     for word in suspicious['keywords']:
         if word in domain:
             score += suspicious['keywords'][word]
+            evaluating.debug('%s matching_keyword(%s) added score:%s', domain, word, score,)
 
     # Testing Levenshtein distance for strong keywords (>= 70 points) (ie. paypol)
     for key in [k for (k,s) in suspicious['keywords'].items() if s >= 70]:
@@ -117,14 +139,17 @@ def score_domain(domain):
         for word in [w for w in words_in_domain if w not in ['email', 'mail', 'cloud']]:
             if distance(str(word), str(key)) == 1:
                 score += 70
+                evaluating.info('%s keyword_levenshtein(%s)(%s) added score:%s', domain, word, key, score,)
 
     # Lots of '-' (ie. www.paypal-datacenter.com-acccount-alert.com)
     if 'xn--' not in domain and domain.count('-') >= 4:
         score += domain.count('-') * 3
+        evaluating.debug('%s many_hypens added score:%s', domain, score,)
 
     # Deeply nested subdomains (ie. www.paypal.com.security.accountupdate.gq)
     if domain.count('.') >= 3:
         score += domain.count('.') * 3
+        evaluating.debug('%s nested_subdomains added score:%s', domain, score,)
 
     return score
 
@@ -144,24 +169,7 @@ def callback(message, context):
             # If issued from a free CA = more suspicious
             if "Let's Encrypt" in message['data']['chain'][0]['subject']['aggregated']:
                 score += 10
-# @@
-# Don't need to print all this stuff
-            '''if score >= 100:
-                tqdm.tqdm.write(
-                    "[!] Suspicious: "
-                    "{} (score={})".format(colored(domain, 'red', attrs=['underline', 'bold']), score))
-            elif score >= 90:
-                tqdm.tqdm.write(
-                    "[!] Suspicious: "
-                    "{} (score={})".format(colored(domain, 'red', attrs=['underline']), score))
-            elif score >= 80:
-                tqdm.tqdm.write(
-                    "[!] Likely    : "
-                    "{} (score={})".format(colored(domain, 'yellow', attrs=['underline']), score))
-            elif score >= 65:
-                tqdm.tqdm.write(
-                    "[+] Potential : "
-                    "{} (score={})".format(colored(domain, attrs=['underline']), score))'''
+                evaluating.debug('%s letsencrypt_CA added score:%s', domain, score,)
 
 # @@ Triggering the bot and the blacklist only when the score is "too damn high" 
             if score >= cfg['phishingcatcher_threshold']:
@@ -169,13 +177,15 @@ def callback(message, context):
 # @@ Excluding wildcard registrations here
                     if domain.startswith("*."):
                         print("\nWildcard found! I will not add: " + domain + " to the file " + pihole_blacklist)
+                        blacklisting.info('%s skipped is_wildcard score:%s', domain, score,)
                     else:
                         bot.sendMessage(telegram_user, domain + " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )
+                        blacklisting.info('%s blacklisted threshold(%d) score:%s', domain, cfg['phishingcatcher_threshold'], score,)
                         f.write("{}\n".format(domain))
 
 # @@ defined a function to expose the webserver
 def start_server():
-    print "\nblacklist served at: http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist
+    logging.info("webserver_started address:%s:%s", IP, str(PORT),)
     httpd.serve_forever()
 # @@
 

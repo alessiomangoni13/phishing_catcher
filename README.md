@@ -28,7 +28,7 @@ pip install -r requirements.txt
 ### Usage
 
 first, edit the config.yml by providing the following information:
-- Telegram bot [TOKEN](https://telepot.readthedocs.io/en/latest/#id6) 
+- Telegram bot [TOKEN](https://telepot.readthedocs.io/en/latest/#id5) 
 - Telegram [id](https://telepot.readthedocs.io/en/latest/#id7) 
 - Server IP address (127.0.0.1 if you want to run it only locally)
 - TCP port where the blacklist will be server (any port > 1024 will do, unless you want to run the script as root, and you don't, don't you??)

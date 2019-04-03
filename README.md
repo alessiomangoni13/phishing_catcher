@@ -34,7 +34,7 @@ first, edit the config.yml by providing the following information:
 - TCP port where the blacklist will be server (any port > 1024 will do, unless you want to run the script as root, and you don't, don't you??)
 - Blacklist filename (any name will do, as long as you keep the .txt extension in order for Pihole to like it)
 - Logs filename
-- Score beyond which phishing_catcher will save new phishing domains (tradeoff between too many false positives and skipping potentially interesting domains) > with the default keywords, I suggest 135
+- Score beyond which phishing_catcher will save new phishing domains (tradeoff between too many false positives and skipping potentially interesting domains.. With the default keywords, I suggest a value of 135)
 
 ```
 $ ./catch_phishing.py

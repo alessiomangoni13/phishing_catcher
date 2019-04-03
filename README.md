@@ -8,6 +8,8 @@ Blacklist generation to feed a [Pi-hole](https://github.com/pi-hole/pi-hole/blob
 
 Notification of a new domain added via [Telegram bot](https://core.telegram.org/bots) 
 
+..and extended logging to file
+
 This is just a working PoC, feel free to contribute and tweak the code to fit your needs 👍
 
 ![usage](https://i.imgur.com/4BGuXkR.gif)

@@ -45,6 +45,12 @@ from tld import get_tld
 
 from confusables import unconfuse
 
+# @@
+# @@ convert localtime to UTC (good for logging)
+import datetime
+utc_datetime = datetime.datetime.utcnow()
+# @@
+
 # @@ Reading config file
 with open("config.yml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
@@ -66,8 +72,8 @@ log_file = cfg['phishingcatcher_log_file']
 log_file = cfg['phishingcatcher_log_file']
 
 logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-                    datefmt='%m-%d %H:%M',
+                    format='%(asctime)s %(levelname)s %(name)s %(message)s',
+                    datefmt=utc_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
                     filename=log_file,
                     filemode='w')
 # defining areas

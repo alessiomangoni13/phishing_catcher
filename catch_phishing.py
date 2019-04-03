@@ -27,7 +27,6 @@ import telepot
 # @@
 
 # @@ I'm exposing a webserver to serve the blacklist to pi-hole
-import ipaddress
 import SimpleHTTPServer
 import SocketServer
 import thread

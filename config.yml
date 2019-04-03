@@ -3,4 +3,5 @@ phishingcatcher_bot_user_id: <YOUR USER ID HERE>
 phishingcatcher_blacklist_addr: <SERVER IP ADDRESS HERE>
 phishingcatcher_blacklist_port: <EXPOSED SERVER TCP PORT HERE>
 phishingcatcher_blacklist_file: <BLACKLIST FILENAME HERE>
+phishingcatcher_log_file: <YOUR LOGFILE HERE>
 phishingcatcher_threshold: <ADJUST YOUR THRESHOLD HERE>

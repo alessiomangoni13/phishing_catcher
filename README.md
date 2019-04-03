@@ -18,16 +18,27 @@ This is just a working PoC, feel free to contribute and tweak the code to fit yo
 
 ![usage](https://i.imgur.com/4BGuXkR.gif)
 
+
+### Requirements
+
+- GNU/Linux (tested on Raspbian 9)
+- Python version > 2.7.13 (lower versions might have SSL issues)
+- pip (to install the requirements)
+- venv (optional)
+- gcc and python-dev package (to compile the pip packages required)
+
 ### Installation
-
-The script should work fine using Python2 or Python3.
-
-You will need the following python packages installed: certstream, tqdm, entropy, termcolor, tld, python_Levenshtein
-
+- Use venv if possible (optional)
 ```sh
-pip install -r requirements.txt
+$ python -m virtualenv env
+$ source env/bin/activate
 ```
 
+- You will need the python packages as specified in the requirements.txt file
+
+```sh
+$ pip install -r requirements.txt
+```
 
 ### Usage
 

@@ -4,6 +4,8 @@ Catching malicious phishing domain names using [certstream](https://certstream.c
 
 Blacklist generation to feed a [Pi-hole](https://github.com/pi-hole/pi-hole/blob/master/README.md)
 
+**Wildcard domains exclusion**
+
 Notification of a new domain added via [Telegram bot](https://core.telegram.org/bots) 
 
 This is just a working PoC, feel free to contribute and tweak the code to fit your needs 👍

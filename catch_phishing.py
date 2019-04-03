@@ -55,8 +55,6 @@ certstream_url = 'wss://certstream.calidog.io'
 pihole_blacklist = cfg['phishingcatcher_blacklist_file']
 # @@
 
-log_suspicious = cfg['phishingcatcher_log_file']
-
 pbar = tqdm.tqdm(desc='certificate_update', unit='cert')
 
 # @@ webserver configuration (remember to use PORT>1024, you don't want Python to run as root don't you?)

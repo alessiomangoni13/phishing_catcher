@@ -10,7 +10,7 @@ Notification of a new domain added via [Telegram bot](https://core.telegram.org/
 
 ..and extended logging to file (very verbose, make sure to write it in ramdisk and rotate it frequently)
 
-![logging](https://i.imgur.com/cPF3uZW.png)
+![logging](https://i.imgur.com/c8JsfCM.png)
 
 also, it will show your bot token in the logs.. *Thanks urllib3* ..ugh..
 

@@ -27,9 +27,14 @@ import telepot
 # @@
 
 # @@ I'm exposing a webserver to serve the blacklist to pi-hole
-import SimpleHTTPServer
-import SocketServer
-import thread
+# @@ Python2 retro-compatibility
+# import SimpleHTTPServer
+# import SocketServer
+import http.server
+import socketserver
+import threading
+# @@ deprecated
+# @@ import thread
 # @@
 
 # @@
@@ -83,8 +88,10 @@ evaluating = logging.getLogger('phishingcatcher.evaluating')
 # @@ webserver configuration (remember to use PORT>1024, you don't want Python to run as root don't you?)
 IP = cfg['phishingcatcher_blacklist_addr']
 PORT = cfg['phishingcatcher_blacklist_port']
-Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-httpd = SocketServer.TCPServer((IP, PORT), Handler)
+Handler = http.server.SimpleHTTPRequestHandler
+httpd = socketserver.TCPServer((IP, PORT), Handler)
+# retro-compatibility with Python 2.7
+# httpd = SocketServer.TCPServer((IP, PORT), Handler)
 # @@
 
 def score_domain(domain):
@@ -168,7 +175,6 @@ def callback(message, context):
         all_domains = message['data']['leaf_cert']['all_domains']
 
         for domain in all_domains:
-            pbar.update(1)
             score = score_domain(domain.lower())
 
             # If issued from a free CA = more suspicious
@@ -189,7 +195,7 @@ def callback(message, context):
                         f.write("{}\n".format(domain))
 
 # @@ defined a function to expose the webserver
-def start_server():
+def webserver():
     logging.info("webserver_started address:%s:%s", IP, str(PORT),)
     httpd.serve_forever()
 # @@
@@ -211,8 +217,12 @@ if __name__ == '__main__':
         if external['tlds'] is not None:
             suspicious['tlds'].update(external['tlds'])
             
- # @@ creating a new thread for the webserver           
-    thread.start_new_thread(start_server, ())
+ # @@ creating a new thread for the webserver
+    t = threading.Thread(target=webserver)
+    t.start()
+            
+ # @@ thread is deprecated, using threading instead
+ # @@ thread.start_new_thread(start_webserver, ())
  # @@
 
     certstream.listen_for_events(callback, url=certstream_url)

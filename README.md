@@ -22,7 +22,7 @@ This is just a working PoC, feel free to contribute and tweak the code to fit yo
 ### Requirements
 
 - GNU/Linux (tested on Raspbian 9)
-- Python version > 3.6 (lower versions might have SSL issues)
+- Python version > 3.6
 - pip3 (to install the requirements)
 - venv (optional)
 - gcc and python-dev package (to compile the pip packages required)

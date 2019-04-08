@@ -22,8 +22,8 @@ This is just a working PoC, feel free to contribute and tweak the code to fit yo
 ### Requirements
 
 - GNU/Linux (tested on Raspbian 9)
-- Python version > 2.7.13 (lower versions might have SSL issues)
-- pip (to install the requirements)
+- Python version > 3.6 (lower versions might have SSL issues)
+- pip3 (to install the requirements)
 - venv (optional)
 - gcc and python-dev package (to compile the pip packages required)
 
@@ -37,7 +37,7 @@ $ source env/bin/activate
 - You will need the python packages as specified in the requirements.txt file
 
 ```sh
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 ### Usage
@@ -54,7 +54,7 @@ first, edit the config.yml by providing the following information:
 and then, you're ready to roll:
 
 ```
-$ ./catch_phishing.py
+$ python3 catch_phishing.py
 ```
 
 ### Example phishing notification

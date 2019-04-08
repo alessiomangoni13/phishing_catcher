@@ -75,7 +75,7 @@ pihole_blacklist = cfg['phishingcatcher_blacklist_file']
 log_file = cfg['phishingcatcher_log_file']
 log_file = cfg['phishingcatcher_log_file']
 
-logging.basicConfig(level=logging.DEBUG,
+logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(levelname)s %(name)s %(message)s',
                     datefmt=utc_datetime.strftime("%Y-%m-%dT%H:%M:%SZ"),
                     filename=log_file,

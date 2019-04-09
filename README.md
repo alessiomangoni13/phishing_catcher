@@ -19,7 +19,7 @@ This is just a working PoC, feel free to contribute and tweak the code to fit yo
 ![usage](https://i.imgur.com/4BGuXkR.gif)
 
 ### Demo
-[Join the public Telegram group](https://t.me/phishing_certstream)
+[Join the public Telegram channel](https://t.me/phishing_certstream)
 
 ### Requirements
 

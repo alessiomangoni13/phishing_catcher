@@ -22,7 +22,8 @@ This is just a working PoC, feel free to contribute and tweak the code to fit yo
 [Join the public Telegram channel](https://t.me/phishing_certstream)
 
 Or you can use my blacklist to feed your Pihole!
-[link](http://176.10.127.169:8888/)
+
+[link](http://threatintel.cybermeng.info:8888/)
 
 ### Requirements
 

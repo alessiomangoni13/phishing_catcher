@@ -41,7 +41,7 @@ $ source env/bin/activate
 - You will need the python packages as specified in the requirements.txt file
 
 ```sh
-$ pip3 install -r requirements.txt
+$ pip3 install -U -r requirements.txt
 ```
 
 ### Usage

@@ -93,6 +93,7 @@ $ tar xzvf geckodriver-XXX-YYY.tar.gz
 $ chmod +x geckodriver
 ### if you're using virtualenv, copy/move it under env/bin/
 # cp geckodriver env/bin/geckodriver
+### if not, geckodriver location should be in your PATH variable
 ```
 
 ### Usage

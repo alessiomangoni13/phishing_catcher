@@ -6,7 +6,7 @@ Blacklist generation to feed a [Pi-hole](https://github.com/pi-hole/pi-hole/blob
 
 **Wildcard domains exclusion**
 
-Notification of a new domain added via [Telegram bot](https://core.telegram.org/bots) 
+Notification of a new domain added via [Telegram bot](https://core.telegram.org/bots) *Now with screenshots!*
 
 ..and (optional) extended logging to file (very verbose, make sure to write it in ramdisk and rotate it frequently)
 
@@ -20,6 +20,9 @@ This is just a working PoC, feel free to contribute and tweak the code to fit yo
 
 ### Demo
 [Join the public Telegram channel](https://t.me/phishing_certstream)
+
+Or you can use my blacklist to feed your Pihole!
+[link](http://176.10.127.169:8888/)
 
 ### Requirements
 

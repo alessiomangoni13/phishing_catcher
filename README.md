@@ -31,7 +31,7 @@ This is just a working PoC, feel free to contribute and tweak the code to fit yo
 - venv (optional)
 - gcc and python-dev package (to compile the pip packages required)
 
-### Installation
+### Installation (minimal: blacklist and notifications only)
 - Use venv if possible (optional)
 ```sh
 $ python3 -m virtualenv env
@@ -42,6 +42,56 @@ $ source env/bin/activate
 
 ```sh
 $ pip3 install -U -r requirements.txt
+```
+
+### Installation (full: blacklist, notifications and screenshot via Tor)
+- Install Firefox if not already present in your system
+
+- Use venv if possible (optional)
+```sh
+$ python3 -m virtualenv env
+$ source env/bin/activate
+```
+
+- You will need the python packages as specified in the requirements_full.txt file
+
+```sh
+$ pip3 install -U -r requirements_full.txt
+```
+
+- Install and start the tor service on your machine
+```
+# yum install tor
+# systemctl start tor
+```
+
+- Install xvfb
+```
+# yum install python-xvfbwrapper
+```
+
+- Download, verify and extract the Tor browser (find your suitable version [here](https://2019.www.torproject.org/projects/torbrowser.html.en))
+```
+### receive the Tor Browser Developers signature:
+$ gpg --keyserver pool.sks-keyservers.net --recv-keys 0x4E2C6E8793298290
+### download the Tor browser and its signature (adjust the link with the package you actually downloaded):
+$ wget https://www.torproject.org/dist/torbrowser/XXX/tor-browser-YYY-XXX_ZZZ.tar.xz
+$ wget https://www.torproject.org/dist/torbrowser/XXX/tor-browser-YYY-XXX_ZZZ.tar.xz.asc
+### verify the package received
+$ gpg --verify tor-browser-YYY-XXX_ZZZ.tar.xz.asc
+### you should have the following output:
+### Good signature from "Tor Browser Developers (signing key) <torbrowser@torproject.org>"
+### now extract the tor-browser package:
+$ tar xvf tor-browser-YYY-XXX_ZZZ.tar.xz
+```
+- Download and extract the geckodriver (find your suitable version [here](https://github.com/mozilla/geckodriver/releases/))
+```
+$ wget https://github.com/mozilla/geckodriver/releases/download/vXXX/geckodriver-XXX-YYY.tar.gz
+$ tar xzvf geckodriver-XXX-YYY.tar.gz
+### make it executable
+$ chmod +x geckodriver
+### if you're using virtualenv, copy/move it under env/bin/
+# cp geckodriver env/bin/geckodriver
 ```
 
 ### Usage
@@ -55,11 +105,17 @@ first, edit the config.yml by providing the following information:
 - Logs filename
 - Score beyond which phishing_catcher will save new phishing domains (tradeoff between too many false positives and skipping potentially interesting domains.. With the default keywords, I suggest a value of 135)
 
+## Warning, consider limiting the access to config.yml!
+```
+# chmod 0700 config.yml
+```
+
 and then, you're ready to roll:
 
 ```
 $ python3 catch_phishing.py
 ```
+
 
 ### Example phishing notification
 ![Bot notification](https://i.imgur.com/24FNAI8.png)

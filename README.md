@@ -105,11 +105,6 @@ first, edit the config.yml by providing the following information:
 - Logs filename
 - Score beyond which phishing_catcher will save new phishing domains (tradeoff between too many false positives and skipping potentially interesting domains.. With the default keywords, I suggest a value of 135)
 
-## Warning, consider limiting the access to config.yml!
-```
-# chmod 0700 config.yml
-```
-
 and then, you're ready to roll:
 
 ```

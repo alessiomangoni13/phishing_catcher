@@ -26,13 +26,15 @@ This is just a working PoC, feel free to contribute and tweak the code to fit yo
 - GNU/Linux (tested on Raspbian 9)
 - Python version > 3.6
 - pip3 (to install the requirements)
+- gcc (to compile some of the requirements)
+- python3-dev
 - venv (optional)
 - gcc and python-dev package (to compile the pip packages required)
 
 ### Installation
 - Use venv if possible (optional)
 ```sh
-$ python -m virtualenv env
+$ python3 -m virtualenv env
 $ source env/bin/activate
 ```
 

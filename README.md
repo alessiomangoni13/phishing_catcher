@@ -85,6 +85,7 @@ $ gpg --verify tor-browser-YYY-XXX_ZZZ.tar.xz.asc
 $ tar xvf tor-browser-YYY-XXX_ZZZ.tar.xz
 ```
 - Download and extract the geckodriver (find your suitable version [here](https://github.com/mozilla/geckodriver/releases/))
+and refer to this [table](https://firefox-source-docs.mozilla.org/testing/geckodriver/geckodriver/Support.html) to match you Firefox version
 ```
 $ wget https://github.com/mozilla/geckodriver/releases/download/vXXX/geckodriver-XXX-YYY.tar.gz
 $ tar xzvf geckodriver-XXX-YYY.tar.gz

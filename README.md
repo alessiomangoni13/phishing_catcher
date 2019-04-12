@@ -110,23 +110,41 @@ $ chmod +x geckodriver
 ### if not, geckodriver location should be in your PATH variable
 ```
 
-### Usage
+### Usage (light version)
 
 first, edit the config.yml by providing the following information:
 - Telegram bot [TOKEN](https://telepot.readthedocs.io/en/latest/#id5) 
 - Telegram [id](https://telepot.readthedocs.io/en/latest/#id7) 
 - Server IP address (127.0.0.1 if you want to run it only locally)
 - TCP port where the blacklist will be server (any port > 1024 will do, unless you want to run the script as root, and you don't, don't you??)
-- Blacklist filename (any name will do, as long as you keep the .txt extension in order for Pihole to like it)
+- Blacklist filename
 - Logs filename
 - Score beyond which phishing_catcher will save new phishing domains (tradeoff between too many false positives and skipping potentially interesting domains.. With the default keywords, I suggest a value of 135)
 
 and then, you're ready to roll:
 
 ```
-$ python3 catch_phishing.py
+$ python3 catch_phishing_ligth.py
 ```
+### Usage (full version)
 
+first, edit the config_full.yml by providing the following information:
+- Telegram bot [TOKEN](https://telepot.readthedocs.io/en/latest/#id5) 
+- Telegram [id](https://telepot.readthedocs.io/en/latest/#id7) 
+- Server IP address (127.0.0.1 if you want to run it only locally)
+- TCP port where the blacklist will be server (any port > 1024 will do, unless you want to run the script as root, and you don't, don't you??)
+- Blacklist filename
+- Logs filename
+- Score beyond which phishing_catcher will save new phishing domains (tradeoff between too many false positives and skipping potentially interesting domains.. With the default keywords, I suggest a value of 135)
+- xvfb session width (default:1024)
+- xvfb session width (default:768)
+- FULL Tor Browser path: (example: /tmp/phishingcatcher/tor-browser_en-US)
+
+and then, you're ready to roll:
+
+```
+$ python3 catch_phishing_full.py
+```
 
 ### Example phishing notification
 ![Bot notification](https://i.imgur.com/24FNAI8.png)

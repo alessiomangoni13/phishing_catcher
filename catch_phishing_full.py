@@ -19,7 +19,6 @@
 import re
 import certstream
 import entropy
-import tqdm
 import yaml
 
 # @@ I'm using telepot to send Telegram notifications

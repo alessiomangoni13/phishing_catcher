@@ -1,7 +1,5 @@
 tld==0.7.9
-tqdm==4.19.4
 entropy==0.10
-termcolor==1.1.0
 certstream==1.10
 telepot==12.7
 python_Levenshtein==0.12.0

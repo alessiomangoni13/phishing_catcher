@@ -26,15 +26,10 @@ import yaml
 import telepot
 # @@
 
-# @@ I'm exposing a webserver to serve the blacklist to pi-hole
-# @@ Python2 retro-compatibility
-# import SimpleHTTPServer
-# import SocketServer
-import http.server
+# @@ I'm exposing a basic webserver to serve the blacklist to pi-hole
+from http.server import BaseHTTPRequestHandler
 import socketserver
 import threading
-# @@ deprecated
-# @@ import thread
 # @@
 
 # @@
@@ -46,7 +41,6 @@ import logging
 from Levenshtein import distance
 from termcolor import colored, cprint
 from tld import get_tld
-
 from confusables import unconfuse
 
 # @@
@@ -88,10 +82,14 @@ evaluating = logging.getLogger('phishingcatcher.evaluating')
 # @@ webserver configuration (remember to use PORT>1024, you don't want Python to run as root don't you?)
 IP = cfg['phishingcatcher_blacklist_addr']
 PORT = cfg['phishingcatcher_blacklist_port']
-Handler = http.server.SimpleHTTPRequestHandler
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'plain/text')
+        self.end_headers()
+        with open(pihole_blacklist, 'rb') as file:
+            self.wfile.write(file.read())
 httpd = socketserver.TCPServer((IP, PORT), Handler)
-# retro-compatibility with Python 2.7
-# httpd = SocketServer.TCPServer((IP, PORT), Handler)
 # @@
 
 def score_domain(domain):

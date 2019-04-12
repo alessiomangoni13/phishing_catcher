@@ -153,6 +153,11 @@ $ python3 catch_phishing_full.py
 
 ![Paypal Phishing](https://i.imgur.com/AK60EYz.png)
 
+### Roadmap
+- integration with urlscan.io
+- Twitter bot
+- docker container
+
 License
 ----
 GNU GPLv3

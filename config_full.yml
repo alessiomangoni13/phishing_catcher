@@ -1,0 +1,10 @@
+phishingcatcher_bot_APIKEY: <YOUR BOT API KEY HERE>
+phishingcatcher_bot_user_id: <YOUR TELEGRAM ID OR CHAT ID>
+phishingcatcher_blacklist_addr: <YOUR IP ADDRESS, 127.0.0.1 TO RUN IT LOCALLY>
+phishingcatcher_blacklist_port: <TCP PORT >= 1024>
+phishingcatcher_blacklist_file: <BLACKLIST FILENAME>
+phishingcatcher_log_file: phishingcatcher.log
+phishingcatcher_threshold: 135
+phishingcatcher_screenshot_width: < xvfb session width default:1024 >
+phishingcatcher_screenshot_height: < xvfb session width default:768 >
+phishingcatcher_screenshot_tor_path: <PATH TO YOUR TOR BROWSER: /tmp/phishingcatcher/tor-browser_en-US >

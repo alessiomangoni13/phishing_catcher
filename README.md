@@ -29,6 +29,7 @@ Or you can use my blacklist to feed your Pihole!
 
 - GNU/Linux (tested on Raspbian 9)
 - Python version > 3.6
+- git (DUH..)
 - pip3 (to install the requirements)
 - gcc (to compile some of the requirements)
 - python3-dev
@@ -36,6 +37,11 @@ Or you can use my blacklist to feed your Pihole!
 - gcc and python-dev package (to compile the pip packages required)
 
 ### Installation (minimal: blacklist and notifications only)
+- clone the repository
+```
+$ git clone https://github.com/alessiomangoni13/phishing_catcher.git
+$ cd phishing_catcher
+```
 - Use venv if possible (optional)
 ```sh
 $ python3 -m virtualenv env
@@ -53,6 +59,11 @@ $ pip3 install -U -r requirements.txt
 - Install xvfb
 ```
 # yum install python-xvfbwrapper
+```
+- clone the repository
+```
+$ git clone https://github.com/alessiomangoni13/phishing_catcher.git
+$ cd phishing_catcher
 ```
 
 - Use venv if possible (optional)

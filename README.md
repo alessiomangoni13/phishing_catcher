@@ -50,6 +50,10 @@ $ pip3 install -U -r requirements.txt
 
 ### Installation (full: blacklist, notifications and screenshot via Tor)
 - Install Firefox if not already present in your system
+- Install xvfb
+```
+# yum install python-xvfbwrapper
+```
 
 - Use venv if possible (optional)
 ```sh
@@ -67,11 +71,6 @@ $ pip3 install -U -r requirements_full.txt
 ```
 # yum install tor
 # systemctl start tor
-```
-
-- Install xvfb
-```
-# yum install python-xvfbwrapper
 ```
 
 - Download, verify and extract the Tor browser (find your suitable version [here](https://2019.www.torproject.org/projects/torbrowser.html.en))

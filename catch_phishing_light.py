@@ -19,7 +19,6 @@ import re
 
 import certstream
 import entropy
-import tqdm
 import yaml
 
 # @@ I'm using telepot to send Telegram notifications
@@ -39,7 +38,6 @@ import logging
 
 
 from Levenshtein import distance
-from termcolor import colored, cprint
 from tld import get_tld
 from confusables import unconfuse
 

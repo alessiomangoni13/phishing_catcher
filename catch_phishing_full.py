@@ -213,7 +213,7 @@ def callback(message, context):
                                 driver.load_url('https://' + domain, wait_for_page_body=True)
                                 driver.get_screenshot_as_file(out_img)
                                 blacklisting.info("Screenshot is saved as %s" % out_img)
-                                bot.sendPhoto(telegram_user, open(out_img, 'rb'), caption=domain + ' score=' + str(score) + ' threshold=' + str(threshold))
+                                bot.sendPhoto(telegram_user, open(out_img, 'rb'), caption=domain + ' score=' + str(score) + ' threshold=' + str(threshold) + ' CA=' + message['data']['chain'][0]['subject']['CN']))
                             except:
                                 blacklisting.info("Screenshot not saved")
 

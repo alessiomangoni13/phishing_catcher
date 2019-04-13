@@ -20,6 +20,10 @@ import re
 import certstream
 import entropy
 import yaml
+# @@
+# @@ To do name resoluton
+import socket
+# @@
 
 # @@ I'm using telepot to send Telegram notifications
 import telepot
@@ -205,6 +209,7 @@ def callback(message, context):
                     else:
                         # bot.sendMessage(telegram_user, domain + " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )
                         blacklisting.info('%s blacklisted threshold(%d) score:%s', domain, threshold, score,)
+                        resolved = socket.getaddrinfo(domain, 443,)
                         f.write("{}\n".format(domain))
                         out_img = join(dirname(realpath(__file__)), domain + ".png")
                         with TorBrowserDriver(Tor_Path) as driver:
@@ -213,7 +218,7 @@ def callback(message, context):
                                 driver.load_url('https://' + domain, wait_for_page_body=True)
                                 driver.get_screenshot_as_file(out_img)
                                 blacklisting.info("Screenshot is saved as %s" % out_img)
-                                bot.sendPhoto(telegram_user, open(out_img, 'rb'), caption=domain + ' score=' + str(score) + ' threshold=' + str(threshold) + ' CA=' + message['data']['chain'][0]['subject']['CN']))
+                                bot.sendPhoto(telegram_user, open(out_img, 'rb'), caption=domain + ' score=' + str(score) + ' threshold=' + str(threshold) + ' CA=' + message['data']['chain'][0]['subject']['CN'] + ' IPV4=' + resolved[2][4][0])
                             except:
                                 blacklisting.info("Screenshot not saved")
 

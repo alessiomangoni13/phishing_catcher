@@ -16,7 +16,7 @@
 # - notification of new potential phishing domains via Telegram bot
 
 import re
-
+import socket
 import certstream
 import entropy
 import yaml
@@ -186,7 +186,8 @@ def callback(message, context):
                         print("\nWildcard found! I will not add: " + domain + " to the file " + pihole_blacklist)
                         blacklisting.info('%s skipped is_wildcard score:%s', domain, score,)
                     else:
-                        bot.sendMessage(telegram_user, domain + " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )
+                        resolved = socket.getaddrinfo(domain, 443,)
+                        bot.sendMessage(telegram_user, domain + "(" + resolved[2][4][0] + ")"+ " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )
                         blacklisting.info('%s blacklisted threshold(%d) score:%s', domain, cfg['phishingcatcher_threshold'], score,)
                         f.write("{}\n".format(domain))
 

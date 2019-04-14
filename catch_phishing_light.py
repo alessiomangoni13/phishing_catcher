@@ -185,6 +185,9 @@ def callback(message, context):
                     if domain.startswith("*."):
                         print("\nWildcard found! I will not add: " + domain + " to the file " + pihole_blacklist)
                         blacklisting.info('%s skipped is_wildcard score:%s', domain, score,)
+# @@ Excluding domains already present in the blacklist
+                    elif domain in f.read():
+                        blacklisting.info('%s skipped is_blacklisted score:%s', domain, score,)
                     else:
                         resolved = socket.getaddrinfo(domain, 443,)
                         bot.sendMessage(telegram_user, domain + "(" + resolved[2][4][0] + ")"+ " added to the blacklist! Go to http://" + IP + ":" + str(PORT) + "/" + pihole_blacklist + " to see the results" )

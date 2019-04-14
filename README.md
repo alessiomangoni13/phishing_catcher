@@ -112,7 +112,7 @@ $ chmod +x geckodriver
 
 ### Usage (light version)
 
-first, edit the config.yml by providing the following information:
+first, edit the config_light.yml by providing the following information:
 - Telegram bot [TOKEN](https://telepot.readthedocs.io/en/latest/#id5) 
 - Telegram [id](https://telepot.readthedocs.io/en/latest/#id7) 
 - Server IP address (127.0.0.1 if you want to run it only locally)

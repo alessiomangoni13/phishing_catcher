@@ -23,7 +23,7 @@ This is just a working PoC, feel free to contribute and tweak the code to fit yo
 
 Or you can use my blacklist to feed your Pihole!
 
-[link](http://threatintel.cybermeng.info:8888/)
+[link](https://threatintel.cybermeng.info/)
 
 ### Requirements
 
@@ -154,7 +154,6 @@ $ python3 catch_phishing_full.py
 ![Paypal Phishing](https://i.imgur.com/AK60EYz.png)
 
 ### Roadmap
-- integration with urlscan.io
 - Twitter bot
 - docker container
 

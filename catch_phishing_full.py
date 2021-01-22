@@ -195,7 +195,7 @@ def callback(message, context):
             score = score_domain(domain.lower())
 
             # If issued from a free CA = more suspicious
-            if "Let's Encrypt" in message['data']['chain'][0]['subject']['aggregated']:
+            if "Let's Encrypt" in message["data"]["leaf_cert"]["issuer"]["aggregated"]:
                 score += 10
                 evaluating.debug('%s letsencrypt_CA added score:%s', domain, score,)
 
